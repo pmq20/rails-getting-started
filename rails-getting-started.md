@@ -1,6 +1,6 @@
 # Rails 快速上手
 author
-:   孝达
+:   潘旻琦(孝达)
 
 allotted-time
 :   1h
@@ -8,11 +8,11 @@ allotted-time
 theme
 :   debian
 
-# 提纲
+# 日程安排
 
-1. Rails 核心技术
-2. 15 分钟创建博客演示
-3. 进一步学习路线图
+* Rails 核心技术
+* 15 分钟创建博客演示
+* 深入学习路线图
 
 
 # Rails 核心技术
@@ -32,7 +32,7 @@ theme
 # 开始之前的提问时间
 * 安装有没有问题？
 * 创建项目有没有问题？
-* 项目目录结构看过了吗？
+* 创建的目录结构看过了吗？
 
 # Active Record
 
@@ -44,14 +44,26 @@ theme
 * 数据查询
 
 # 对象关系映射
+
+| 类名  | 表名  |
+|---|---|
+| Post  | posts  |
+| LineItem  | line_items  |
+| Mouse  | mice  |
+| STD  | 猜一猜 |
+| B  | 猜一猜 |
+| A::B  | 猜一猜 |
+
+# 对象关系映射
+
 | 类名  | 表名  |
 |---|---|
 | Post  | posts  |
 | LineItem  | line_items  |
 | Mouse  | mice  |
 | STD  | stds |
-| B  | 提问 |
-| A::B  | 提问 |
+| B  | bs |
+| A::B  | bs |
 
 # 特殊字段
 * id、*_id
@@ -81,38 +93,126 @@ theme
     end
 {: lang="ruby"}
 
-# blocking handler sample 
+# 数据库迁移
 
-    uri = URI(@@url)
-    res = Net::HTTP.get_response(uri)
-    received res
+    class ChangeProductsPrice < ActiveRecord::Migration
+      def up
+        change_table :products do |t|
+          t.change :price, :string
+        end
+      end
+ 
+      def down
+        change_table :products do |t|
+          t.change :price, :integer
+        end
+      end
+    end
 {: lang="ruby"}
 
-# How was EM used in HuantengSmart
+# 数据库迁移
 
-* Connecting all TelePort routers
-* Hosting a HTTP server for internal Rails to send requests
-* Hosting a WebSocket server for mobile apps
-* Hosting (yet another) WebSocket server for web pages
+    $ bin/rails generate migration \
+    AddPartNumberToProducts
+    
+    $ bin/rails generate migration \
+    AddPartNumberToProducts part_number:string
+    
+    $ bin/rails generate migration \
+    AddPartNumberToProducts part_number:string:index
+    
+    $ bin/rake db:rollback
+    
+    $ bin/rake db:rollback STEP=3
+{: lang="bash"}
 
-# Memory-leak Symptom
 
-| Uptime | Observed Memory Footprint |
-|---------|--------|
-| Startup | 73M |
-| 34min | 84M |
-| 1h | 92M |
-| 1h44m | 106M |
-| 3h10m | 130M |
-| 30h | 3.47G |
+# 数据库迁移
 
-# Memory-leak Symptom
+    create_table(:apples) { |t| }
+    add_column :products, :part_number, :string
+    add_index :products, :part_number
+    
+    add_reference :products, :supplier,
+          polymorphic: true, index: true
+          
+    create_join_table :products, :categories,
+          table_name: :categorization
+{: lang="ruby"}
 
-* Single instance
-* Connecting 200 TelePort routers
-* Avg. Leaking 32KB per second
+# 数据校验
 
-# Diagnosis (1st try)
+    validates :name, presence: true
+    validates :password, confirmation: true
+    validates :size, inclusion:
+              { in: %w(small medium large) }
+    validates :name, length: { minimum: 2 }
+    validates :email, uniqueness: true
+    validates :password, length: { in: 6..20 }
+    validates :points, numericality: true
+    validates :terms_of_service, acceptance: true
+    validates_associated :books
+{: lang="ruby"}
+
+# 对象生命周期管理
+
+    class User < ActiveRecord::Base
+      validates :login, :email, presence: true
+
+      before_validation :ensure_login_has_a_value
+
+      protected
+        def ensure_login_has_a_value
+          if login.nil?
+            self.login = email unless email.blank?
+          end
+        end
+    end
+{: lang="ruby"}
+
+# 对象生命周期管理 (C)
+
+* before_validation
+* after_validation
+* before_save
+* around_save
+* before_create
+* around_create
+* after_create
+* after_save
+
+# 对象生命周期管理 (R)
+
+* after_initialize
+* after_find
+
+# 对象生命周期管理 (U)
+
+* before_validation
+* after_validation
+* before_save
+* around_save
+* before_update
+* around_update
+* after_update
+* after_save
+
+# 对象生命周期管理 (D)
+
+* before_destroy
+* around_destroy
+* after_destroy
+
+# 对象关联管理
+
+* belongs_to
+* has_one
+* has_many
+* has_many :through
+* has_one :through
+* has_and_belongs_to_many
+
+# 数据查询
 
 * conjecture: TelePort routers failed to disconnect
 * After TelePort routers _physically_ disconnects the server did not got notified
