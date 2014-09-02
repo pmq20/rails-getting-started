@@ -420,3 +420,132 @@ theme
     ) 
 {: lang="ruby"}
 
+# Action Dispatch
+
+* 资源路由
+* 非资源路由
+
+# 资源路由
+
+`resources :photos` 生成：
+* GET	/photos	photos#index
+* GET	/photos/new	photos#new
+* POST	/photos	photos#create
+* GET	/photos/:id	photos#show
+* GET	/photos/:id/edit	photos#edit
+* PATCH/PUT	/photos/:id	photos#update
+* DELETE	/photos/:id	photos#destroy
+
+# 资源路由
+
+    resources :photos do
+      collection do
+        get 'search'
+      end
+  
+      member do
+        get 'preview'
+      end
+    end
+{: lang="ruby"}
+
+# 非资源路由
+
+    get ':controller(/:action(/:id))'
+    get ':controller/:action/:id/:user_id'
+    get ':controller/:action/:id/with_user/:user_id'
+    get 'photos/:id', to: 'photos#show'
+    get 'exit', to: 'sessions#destroy', as: :logout
+    match 'photos', to: 'photos#show', via: :all
+    root to: 'pages#main'
+{: lang="ruby"}
+
+# Active Support
+
+    def set_conditional_cache_control!
+      return if self["Cache-Control"].present?
+      ...
+    end
+{: lang="ruby"}
+
+# Active Support
+
+    host = config[:host].presence || 'localhost'
+    "foo".duplicable? # => true
+    false.duplicable?  # => false
+    @number.try(:next)
+    [0, true, String].to_param # => "0/true/String"
+    quietly { system 'bundle install' }
+    alias_attribute :login, :email
+{: lang="ruby"}
+
+# Action Mailer
+
+    class UserMailer < ActionMailer::Base
+      default from: 'notifications@example.com'
+ 
+      def welcome_email(user)
+        @user = user
+        @url  = 'http://example.com/login'
+        mail(to: @user.email,
+          subject: 'Welcome to My')
+      end
+    end
+{: lang="ruby"}
+
+# Action Mailer
+
+`app/views/user_mailer/welcome_email.html.erb`
+
+
+# Action Mailer
+
+    UserMailer.welcome_email(@user).deliver
+{: lang="ruby"}
+
+# sprockets
+
+* 静态文件组织结构
+* 清单文件结构
+* 编译与部署
+
+# 静态文件组织结构
+
+* app/assets 
+* lib/assets 
+* vendor/assets
+
+# 清单文件结构
+
+```
+// ...
+//= require jquery
+//= require jquery_ujs
+//= require_tree .
+```
+
+# 清单文件结构
+
+例如：
+* app/assets/javascripts/home.js
+* lib/assets/javascripts/moovinator.js
+* vendor/assets/javascripts/slider.js
+* vendor/assets/somepackage/phonebox.js
+
+# 清单文件结构
+
+```
+//= require home
+//= require moovinator
+//= require slider
+//= require phonebox
+```
+
+# 编译与部署
+
+* `config.assets.precompile += ...`
+* `RAILS_ENV=production bin/rake assets:precompile`
+* 编译成例如`g-908e25f4bf641868d8683022a5b62f54.css`
+* 更改`config.action_controller.asset_host`
+
+# 第三方扩展包
