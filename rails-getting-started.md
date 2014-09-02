@@ -1,4 +1,4 @@
-# Rails Getting Started
+# Rails 快速上手
 author
 :   孝达
 
@@ -8,29 +8,77 @@ allotted-time
 theme
 :   debian
 
-# gist
+# 提纲
 
-* What's Eventmachine and How was it used in HuantengSmart
-* Memory-leak Symptom
-* Diagnosis
-* Treatment
+1. Rails 核心技术
+2. 15 分钟创建博客演示
+3. 进一步学习路线图
 
 
-# What's Eventmachine
+# Rails 核心技术
 
-* event-processing library, provides event-driven I/O using the Reactor pattern (反应堆模式)
-* single-threaded, scalability limited by _calling request handlers synchronously_ & _demultiplexer_
-* not to be confused with Actor model, ex. erlang/celluloid
-* not to be confused with Proactor pattern, ex. Boost.Asio
+* 模型：Active Record
+* 视图：Action View
+* 控制器：Action Controller
+* 路由：Action Dispatch
 
-# What's Eventmachine (cont.)
+# Rails 核心技术
 
-![](reactor_blocking.png){:relative_height='80' reflect_ratio='0.5'}
+* 辅助：Active Support
+* 邮件：Action Mailer
+* 前端：sprockets
+* 第三方扩展包
 
-# nonblocking handler sample (by Longyi)
+# 开始之前的提问时间
+* 安装有没有问题？
+* 创建项目有没有问题？
+* 项目目录结构看过了吗？
 
-    http = EventMachine::HttpRequest.new(@@url).put :body => @@post_params[@@request_count%2]
-    http.callback { received http.response if http.response }
+# Active Record
+
+* 对象关系映射
+* 数据库迁移
+* 数据校验
+* 对象生命周期管理
+* 对象关联管理
+* 数据查询
+
+# 对象关系映射
+| 类名  | 表名  |
+|---|---|
+| Post  | posts  |
+| LineItem  | line_items  |
+| Mouse  | mice  |
+| STD  | stds |
+| B  | 提问 |
+| A::B  | 提问 |
+
+# 特殊字段
+* id、*_id
+* created_at、updated_at
+* lock_version
+* type、*_type
+* *_count
+* 保留字（DangerousAttributeError）
+
+# CRUD
+* new、create、create!
+* all、first、find_by、where
+* update、update_all、update_attribute
+* destroy、delete
+
+# 数据库迁移
+
+    class CreateProducts < ActiveRecord::Migration
+      def change
+        create_table :products do |t|
+          t.string :name
+          t.text :description
+ 
+          t.timestamps
+        end
+      end
+    end
 {: lang="ruby"}
 
 # blocking handler sample 
