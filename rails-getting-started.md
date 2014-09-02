@@ -355,3 +355,68 @@ theme
       });
     });
 {: lang="js"}
+
+# Action Controller
+
+* 请求参数处理
+* 过滤器
+* 渲染管理
+* 会话管理
+
+# 请求参数处理
+
+    class ClientsController <
+          ApplicationController
+      def index
+        if params[:status] == "activated"
+          @clients = Client.activated
+        else
+          @clients = Client.inactivated
+        end
+      end
+    end
+{: lang="ruby"}
+
+# 过滤器
+
+    class ApplicationController <
+          ActionController::Base
+      before_action :require_login
+ 
+      private
+ 
+      def require_login
+        unless logged_in?
+          flash[:error] = "You must be logged"
+          redirect_to new_login_url
+        end
+      end
+    end
+{: lang="ruby"}
+
+# 渲染管理
+
+    class UsersController <
+          ApplicationController
+      def index
+        @users = User.all
+        respond_to do |format|
+          format.html # index.html.erb
+          format.xml  { render xml: @users}
+          format.json { render json: @users}
+        end
+      end
+    end
+{: lang="ruby"}
+
+# 会话管理
+
+    YourApp::Application.config.secret_key_base =
+      '49d3f3de9ed86c74b94ad6bd0...'
+
+    YourApp::Application.config.session_store(
+      :cookie_store, key: '_your_app_session',
+      domain: ".example.com"
+    ) 
+{: lang="ruby"}
+
