@@ -1,4 +1,4 @@
-# Rails 快速上手
+# Rails 快速上手攻略
 author
 :   潘旻琦(孝达)
 
