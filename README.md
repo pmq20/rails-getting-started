@@ -1,23 +1,10 @@
 # P.S.V.R's Presentation
 
 
-## For author
+## Show
 
-### Show
+    rabbit rails-getting-started.md
 
-    rake
+## Publish
 
-### Publish
-
-    rake publish
-
-## For viewers
-
-### Install
-
-    gem install presentation-name-here
-
-### Show
-
-    rabbit presentation-name-here.gem
-
+    rabbit rails-getting-started.md -p -o rails-getting-started.pdf

@@ -428,6 +428,7 @@ theme
 # 资源路由
 
 `resources :photos` 生成：
+
 * GET	/photos	photos#index
 * GET	/photos/new	photos#new
 * POST	/photos	photos#create
@@ -527,6 +528,7 @@ theme
 # 清单文件结构
 
 例如：
+
 * app/assets/javascripts/home.js
 * lib/assets/javascripts/moovinator.js
 * vendor/assets/javascripts/slider.js
