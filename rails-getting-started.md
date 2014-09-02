@@ -549,3 +549,48 @@ theme
 * 更改`config.action_controller.asset_host`
 
 # 第三方扩展包
+
+* 分页：kaminari
+* 用户认证：devise
+* 用户授权：cancan
+* 上传：paperclip
+
+# 第三方扩展包
+
+* 后台任务：sidekiq
+* 全文搜索：sunspot
+* 测试统计：simplecov
+* 性能统计：rack-mini-profiler
+
+# 第三方扩展包
+* 代码高亮：coderay
+* 监控：god
+* 服务器：thin
+* 动作流：public_activity
+
+# 15 分钟创建博客演示
+
+Demo
+
+# 深入学习路线图：入门
+
+* 学 Rails Guides：http://guides.rubyonrails.org/
+* 看 http://railscasts.com 的视频教程
+* 看 《应用 Rails 进行敏捷 Web 开发》
+* 阅 ihower 写的《Ruby on Rails 實戰聖經》
+* 读《Ruby on Rails Tutorial》：http://www.railstutorial.org/book
+
+# 深入学习路线图：进阶
+* 阅读《Why's (Poignant) Guide to Ruby》了解社区文化
+* 用 Rails 开发一个完整的项目
+* 阅读《Ruby 风格指导》和《Rails 风格指导》
+* 用 “Rails for Zombies”：http://railsforzombies.org/
+* 上 Ruby-China 参与讨论：https://ruby-china.org/
+
+
+# 深入学习路线图：高级
+* 阅读工程、扩展包、框架三类项目的源代码
+* 为工程项目提交代码，如 ruby-china
+* 为扩展包项目提交代码，如 warden
+* 为 rails 框架提交代码
+* 加入 rails core team
